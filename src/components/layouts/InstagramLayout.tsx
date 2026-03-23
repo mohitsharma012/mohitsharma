@@ -6,6 +6,24 @@ import ThemeToggle from "@/components/ThemeToggle";
 import ProjectModal from "@/components/ProjectModal";
 import { profile, about, projects } from "@/data/site";
 
+const skillIcons: Record<string, string> = {
+  Python: "https://cdn.simpleicons.org/python",
+  TypeScript: "https://cdn.simpleicons.org/typescript",
+  LangChain: "https://cdn.simpleicons.org/langchain",
+  LangGraph: "https://cdn.simpleicons.org/langchain",
+  spaCy: "https://cdn.simpleicons.org/spacy",
+  FastAPI: "https://cdn.simpleicons.org/fastapi",
+  Django: "https://cdn.simpleicons.org/django",
+  React: "https://cdn.simpleicons.org/react",
+  "Next.js": "https://cdn.simpleicons.org/nextdotjs",
+  PostgreSQL: "https://cdn.simpleicons.org/postgresql",
+  MongoDB: "https://cdn.simpleicons.org/mongodb",
+  Redis: "https://cdn.simpleicons.org/redis",
+  Docker: "https://cdn.simpleicons.org/docker",
+  AWS: "https://cdn.simpleicons.org/amazonaws",
+  Vercel: "https://cdn.simpleicons.org/vercel",
+};
+
 const stats = [
   { label: "posts", value: projects.length },
   { label: "followers", value: "1.2K" },
@@ -98,10 +116,21 @@ export default function InstagramLayout({ onReset }: { onReset: () => void }) {
         <div className="flex gap-3 md:gap-4 overflow-x-auto pb-4 mb-4 scrollbar-hide border-b border-[#dbdbdb] dark:border-[#363636] px-1">
           {about.techStack.slice(0, 8).map((tech) => (
             <div key={tech} className="flex flex-col items-center gap-1 shrink-0">
-              <div className="w-14 h-14 md:w-[77px] md:h-[77px] rounded-full flex items-center justify-center border border-[#dbdbdb] dark:border-[#363636] bg-[#fafafa] dark:bg-[#121212]">
-                <span className="text-[8px] md:text-[10px] font-semibold text-center leading-tight px-1">
-                  {tech}
-                </span>
+              <div className="w-14 h-14 md:w-[77px] md:h-[77px] rounded-full flex items-center justify-center border border-[#dbdbdb] dark:border-[#363636] bg-[#fafafa] dark:bg-[#121212] p-2.5 md:p-3.5">
+                {skillIcons[tech] ? (
+                  <Image
+                    src={skillIcons[tech]}
+                    alt={tech}
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-contain dark:invert-0"
+                    unoptimized
+                  />
+                ) : (
+                  <span className="text-[8px] md:text-[10px] font-semibold text-center leading-tight">
+                    {tech}
+                  </span>
+                )}
               </div>
               <span className="text-[10px] md:text-xs truncate w-14 md:w-[77px] text-center">
                 {tech}
