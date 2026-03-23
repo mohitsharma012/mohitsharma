@@ -1,5 +1,9 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import ThemeToggle from "@/components/ThemeToggle";
+import ProjectModal from "@/components/ProjectModal";
 import { profile, about, projects } from "@/data/site";
 
 const stats = [
@@ -9,8 +13,24 @@ const stats = [
 ];
 
 export default function InstagramLayout({ onReset }: { onReset: () => void }) {
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const selectedProject = selectedIdx !== null ? projects[selectedIdx] : null;
+
+  useEffect(() => {
+    document.body.style.overflow = selectedIdx !== null ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [selectedIdx]);
+
   return (
     <div className="min-h-screen bg-[#fafafa] dark:bg-black text-[#262626] dark:text-[#f5f5f5] transition-colors duration-200" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', fontSize: "14px" }}>
+      {selectedProject && selectedIdx !== null && (
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedIdx(null)}
+          onPrev={selectedIdx > 0 ? () => setSelectedIdx(selectedIdx - 1) : null}
+          onNext={selectedIdx < projects.length - 1 ? () => setSelectedIdx(selectedIdx + 1) : null}
+        />
+      )}
       {/* Instagram Nav */}
       <header className="sticky top-0 z-40 bg-white dark:bg-black border-b border-[#dbdbdb] dark:border-[#363636]">
         <div className="max-w-[935px] mx-auto px-4 h-[60px] flex items-center justify-between">
@@ -103,30 +123,28 @@ export default function InstagramLayout({ onReset }: { onReset: () => void }) {
         </div>
 
         {/* Project Grid */}
-        <div className="grid grid-cols-3 gap-1 mb-8">
+        <div className="grid grid-cols-2 gap-1 mb-8">
           {projects.map((project) => (
-            <a
+            <button
               key={project.title}
-              href={project.link}
-              className="group relative aspect-square overflow-hidden bg-[#f0f0f0] dark:bg-[#1a1a1a]"
+              onClick={() => setSelectedIdx(projects.indexOf(project))}
+              className="group relative aspect-video overflow-hidden bg-[#f0f0f0] dark:bg-[#1a1a1a] cursor-pointer"
             >
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
-                <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-xl mb-2 md:mb-3 flex items-center justify-center" style={{ background: project.langColor + "33" }}>
-                  <span className="text-lg md:text-2xl font-bold" style={{ color: project.langColor }}>
-                    {project.title[0]}
-                  </span>
-                </div>
-                <h3 className="text-[10px] md:text-sm font-semibold mb-0.5 md:mb-1">{project.title}</h3>
-                <p className="text-[8px] md:text-[10px] leading-snug line-clamp-2 text-[#8e8e8e] dark:text-[#a8a8a8] hidden sm:block">{project.description}</p>
-              </div>
+              <Image
+                src={project.screenshots[0].image}
+                alt={project.title}
+                fill
+                className="object-cover"
+              />
 
-              <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-6">
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center gap-1 p-2">
                 <span className="flex items-center gap-1 text-white text-sm font-semibold">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                   {project.stars}
                 </span>
+                <span className="text-white text-[10px] md:text-xs font-semibold text-center line-clamp-1">{project.title}</span>
               </div>
-            </a>
+            </button>
           ))}
 
         </div>

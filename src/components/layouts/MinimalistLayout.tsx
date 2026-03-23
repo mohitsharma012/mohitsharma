@@ -1,12 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import ThemeToggle from "@/components/ThemeToggle";
+import ProjectModal from "@/components/ProjectModal";
 import { profile, about, projects } from "@/data/site";
 
 export default function MinimalistLayout({ onReset }: { onReset: () => void }) {
   const [copied, setCopied] = useState(false);
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const selectedProject = selectedIdx !== null ? projects[selectedIdx] : null;
+
+  useEffect(() => {
+    document.body.style.overflow = selectedIdx !== null ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [selectedIdx]);
 
   const copyEmail = () => {
     navigator.clipboard.writeText(profile.email);
@@ -15,17 +23,30 @@ export default function MinimalistLayout({ onReset }: { onReset: () => void }) {
   };
   return (
     <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0a] text-[#1a1a1a] dark:text-[#e5e5e5] transition-colors duration-300" style={{ fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
-      <div className="max-w-3xl mx-auto px-6 py-12 md:py-20">
-        {/* Top bar */}
-        <div className="flex items-center justify-between mb-12 md:mb-20">
+      {selectedProject && selectedIdx !== null && (
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedIdx(null)}
+          onPrev={selectedIdx > 0 ? () => setSelectedIdx(selectedIdx - 1) : null}
+          onNext={selectedIdx < projects.length - 1 ? () => setSelectedIdx(selectedIdx + 1) : null}
+        />
+      )}
+      {/* Sticky top bar */}
+      <div className="sticky top-0 z-40 bg-[#111] dark:bg-[#111]">
+        <div className="max-w-3xl mx-auto px-6 flex items-center justify-end gap-4 h-10">
           <button
             onClick={onReset}
-            className="text-xs text-[#999] dark:text-[#555] hover:text-[#1a1a1a] dark:hover:text-white transition-colors tracking-wide"
+            className="text-[11px] text-white/50 hover:text-white transition-colors tracking-wide cursor-pointer"
           >
-            &larr; back
+            Switch view
           </button>
-          <ThemeToggle />
+          <div className="text-white/50 hover:text-white transition-colors">
+            <ThemeToggle />
+          </div>
         </div>
+      </div>
+
+      <div className="max-w-3xl mx-auto px-6 py-12 md:py-20">
 
         {/* Hero */}
         <header className="mb-12 md:mb-20">
@@ -93,10 +114,10 @@ export default function MinimalistLayout({ onReset }: { onReset: () => void }) {
           <h2 className="text-[11px] uppercase tracking-[0.15em] font-semibold text-[#bbb] dark:text-[#444] mb-5">Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {projects.map((project) => (
-              <a
+              <button
                 key={project.title}
-                href={project.link}
-                className="group block p-5 rounded-xl border border-[#eaeaea] dark:border-[#1e1e1e] hover:border-[#ccc] dark:hover:border-[#333] bg-white dark:bg-[#111] transition-all duration-200 hover:shadow-sm"
+                onClick={() => setSelectedIdx(projects.indexOf(project))}
+                className="group block p-5 rounded-xl border border-[#eaeaea] dark:border-[#1e1e1e] hover:border-[#ccc] dark:hover:border-[#333] bg-white dark:bg-[#111] transition-all duration-200 hover:shadow-sm text-left cursor-pointer w-full"
               >
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-sm font-semibold group-hover:text-black dark:group-hover:text-white transition-colors">
@@ -113,7 +134,7 @@ export default function MinimalistLayout({ onReset }: { onReset: () => void }) {
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
                   {project.stars}
                 </div>
-              </a>
+              </button>
             ))}
           </div>
         </section>

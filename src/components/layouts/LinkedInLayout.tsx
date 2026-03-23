@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import ThemeToggle from "@/components/ThemeToggle";
+import ProjectModal from "@/components/ProjectModal";
 import { profile, about, projects } from "@/data/site";
 
 function ContactModal({ onClose }: { onClose: () => void }) {
@@ -58,10 +59,25 @@ function ContactModal({ onClose }: { onClose: () => void }) {
 
 export default function LinkedInLayout({ onReset }: { onReset: () => void }) {
   const [showContact, setShowContact] = useState(false);
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const selectedProject = selectedIdx !== null ? projects[selectedIdx] : null;
+
+  useEffect(() => {
+    document.body.style.overflow = selectedIdx !== null ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [selectedIdx]);
 
   return (
     <div className="min-h-screen bg-[#f4f2ee] dark:bg-[#1b1f23] text-[#191919] dark:text-[#e6edf3] transition-colors duration-200" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', fontSize: "14px" }}>
       {showContact && <ContactModal onClose={() => setShowContact(false)} />}
+      {selectedProject && selectedIdx !== null && (
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedIdx(null)}
+          onPrev={selectedIdx > 0 ? () => setSelectedIdx(selectedIdx - 1) : null}
+          onNext={selectedIdx < projects.length - 1 ? () => setSelectedIdx(selectedIdx + 1) : null}
+        />
+      )}
 
       {/* LinkedIn Nav */}
       <header className="sticky top-0 z-40 shadow-sm bg-white dark:bg-[#1e2328] border-b border-[#e0dfdc] dark:border-[#383c41]">
@@ -91,8 +107,8 @@ export default function LinkedInLayout({ onReset }: { onReset: () => void }) {
       <div className="max-w-[1128px] mx-auto px-4 py-6">
         {/* Profile Card */}
         <div className="rounded-lg overflow-hidden shadow-sm mb-2 bg-white dark:bg-[#1e2328] border border-[#e0dfdc] dark:border-[#383c41]">
-          <div className="h-[120px] md:h-[200px] relative" style={{ background: "linear-gradient(135deg, #0a66c2 0%, #004182 100%)" }}>
-            <div className="absolute bottom-0 left-0 right-0 h-1/2" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.3), transparent)" }} />
+          <div className="relative overflow-hidden h-[150px] md:h-[280px]">
+            <Image src="/linkedin-banner.png" alt="Banner" fill className="object-cover object-center" priority />
           </div>
 
           <div className="px-4 md:px-6 pb-6 relative">
@@ -142,11 +158,11 @@ export default function LinkedInLayout({ onReset }: { onReset: () => void }) {
               <h2 className="text-xl font-semibold mb-4">Projects</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {projects.map((project) => (
-                  <a key={project.title} href={project.link} className="block p-4 rounded-lg bg-[#f3f2ef] dark:bg-[#2d3239] transition-colors">
+                  <button key={project.title} onClick={() => setSelectedIdx(projects.indexOf(project))} className="block p-4 rounded-lg bg-[#f3f2ef] dark:bg-[#2d3239] transition-colors text-left hover:bg-[#eae8e4] dark:hover:bg-[#353b43] cursor-pointer w-full">
                     <h3 className="font-semibold text-sm mb-1">{project.title}</h3>
                     <p className="text-xs leading-relaxed text-[#666] dark:text-[#a1a1aa]">{project.description}</p>
                     <p className="text-xs mt-2 font-medium text-[#0a66c2] dark:text-[#70b5f9]">{project.language}</p>
-                  </a>
+                  </button>
                 ))}
               </div>
             </section>

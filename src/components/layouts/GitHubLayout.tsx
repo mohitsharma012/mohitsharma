@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Footer from "@/components/Footer";
 import ThemeToggle from "@/components/ThemeToggle";
+import ProjectModal from "@/components/ProjectModal";
 import { tabs, profile, projects } from "@/data/site";
 
 function RepoIcon() {
@@ -23,7 +24,7 @@ function StarIcon() {
   );
 }
 
-function RepositoriesView() {
+function RepositoriesView({ onSelectProject }: { onSelectProject: (idx: number) => void }) {
   const [search, setSearch] = useState("");
   const filtered = projects.filter(
     (p) =>
@@ -49,9 +50,9 @@ function RepositoriesView() {
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
-                  <a href={project.link} className="text-base md:text-xl font-semibold text-accent hover:underline break-all">
+                  <button onClick={() => onSelectProject(projects.indexOf(project))} className="text-base md:text-xl font-semibold text-accent hover:underline break-all text-left cursor-pointer">
                     {project.title}
-                  </a>
+                  </button>
                   <span className="text-xs border border-border text-muted rounded-full px-1.5 py-0 shrink-0">
                     Public
                   </span>
@@ -87,9 +88,24 @@ function RepositoriesView() {
 
 export default function GitHubLayout({ onReset }: { onReset: () => void }) {
   const [activeTab, setActiveTab] = useState("Overview");
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const selectedProject = selectedIdx !== null ? projects[selectedIdx] : null;
+
+  useEffect(() => {
+    document.body.style.overflow = selectedIdx !== null ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [selectedIdx]);
 
   return (
     <div className="theme-github">
+      {selectedProject && selectedIdx !== null && (
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedIdx(null)}
+          onPrev={selectedIdx > 0 ? () => setSelectedIdx(selectedIdx - 1) : null}
+          onNext={selectedIdx < projects.length - 1 ? () => setSelectedIdx(selectedIdx + 1) : null}
+        />
+      )}
       <header className="bg-header text-white px-4 h-16 flex items-center">
         <div className="max-w-[1280px] w-full mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -141,7 +157,7 @@ export default function GitHubLayout({ onReset }: { onReset: () => void }) {
         </aside>
         <main className="flex-1 min-w-0">
           {activeTab === "Overview" && <About />}
-          {activeTab === "Repositories" && <RepositoriesView />}
+          {activeTab === "Repositories" && <RepositoriesView onSelectProject={setSelectedIdx} />}
           {activeTab !== "Overview" && activeTab !== "Repositories" && (
             <div className="py-10 text-center text-sm text-muted">
               Nothing to see here yet.
