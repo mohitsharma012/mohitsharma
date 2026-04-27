@@ -120,7 +120,10 @@ html.terminal {
   --term-fg-dim: #00cc33;
   --term-fg-muted: #008822;
   --term-border: rgba(0, 255, 65, 0.22);
-  --term-elevated: rgba(0, 255, 65, 0.05);
+  /* Solid surfaces — translucent values render as see-through over the
+     pure-black page, so we use opaque green-tinted blacks instead. */
+  --term-elevated: #0a1a0a;
+  --term-elevated-strong: #102810;
   --term-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Monaco,
     Consolas, "Courier New", monospace;
 }
@@ -160,9 +163,10 @@ html.terminal :where([class*="bg-black/"]) {
   background-color: rgba(0, 0, 0, 0.7) !important;
 }
 
-/* Code surfaces look like an actual terminal pane. */
+/* Code surfaces look like an actual terminal pane — slightly brighter
+   than regular surfaces so they read as "input/output" blocks. */
 html.terminal :where(code, pre, kbd) {
-  background-color: rgba(0, 255, 65, 0.08) !important;
+  background-color: var(--term-elevated-strong) !important;
   color: #66ff66 !important;
 }
 
