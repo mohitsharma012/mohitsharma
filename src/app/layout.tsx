@@ -79,10 +79,7 @@ export const metadata: Metadata = {
 const themeScript = `
 (function() {
   try {
-    var stored = localStorage.getItem('theme');
-    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var theme = stored;
-    if (!theme) theme = prefersDark ? 'dark' : 'light';
+    var theme = localStorage.getItem('theme') || 'light';
     var html = document.documentElement;
     if (theme === 'terminal') {
       html.classList.add('dark', 'terminal');
