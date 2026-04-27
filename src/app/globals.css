@@ -3,6 +3,11 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Noto Sans", Helvetica, Arial, sans-serif;
+  --font-display: "Satoshi", var(--font-inter), -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+
   --gh-background: #ffffff;
   --gh-foreground: #1f2328;
   --gh-muted: #656d76;
@@ -43,9 +48,22 @@
 
 body {
   color: var(--color-foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
   line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Justify body copy. Hyphenation reduces the rivers of whitespace
+   that justified text otherwise produces, especially on narrow viewports. */
+p {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .theme-github {
@@ -56,9 +74,174 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Smooth crossfade only while the user is toggling the theme. We avoid
+   transitioning permanently to keep hover states snappy. */
+html.theme-switching,
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease,
+    fill 250ms ease,
+    stroke 250ms ease,
+    outline-color 250ms ease,
+    text-shadow 250ms ease !important;
+}
+
+/* Neutral selection that reads in both themes. */
 ::selection {
-  background: var(--gh-accent);
-  color: white;
+  background: #1a1a1a;
+  color: #ffffff;
+}
+.dark ::selection {
+  background: #e5e5e5;
+  color: #0a0a0a;
+}
+
+/* Visible, theme-aware focus ring for keyboard navigation. */
+:focus-visible {
+  outline: 2px solid #1a1a1a;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.dark :focus-visible {
+  outline-color: #e5e5e5;
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   Terminal theme: layered on top of .dark. Green-on-black + monospace
+   with a subtle CRT-phosphor glow. Activated by `.terminal` on <html>.
+   ────────────────────────────────────────────────────────────────── */
+html.terminal {
+  --term-bg: #000000;
+  --term-fg: #00ff41;
+  --term-fg-dim: #00cc33;
+  --term-fg-muted: #008822;
+  --term-border: rgba(0, 255, 65, 0.22);
+  --term-elevated: rgba(0, 255, 65, 0.05);
+  --term-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Monaco,
+    Consolas, "Courier New", monospace;
+}
+
+html.terminal,
+html.terminal body {
+  background-color: var(--term-bg) !important;
+}
+
+/* Force monospace + green text + subtle CRT glow on every element. */
+html.terminal,
+html.terminal *,
+html.terminal *::before,
+html.terminal *::after {
+  font-family: var(--term-mono) !important;
+  letter-spacing: 0 !important;
+  color: var(--term-fg) !important;
+  border-color: var(--term-border) !important;
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.25);
+}
+
+/* Reset any *static* element-level background to a faint phosphor tint
+   so the surface hierarchy survives the mode switch. The selector only
+   matches `bg-` at the start of a class token to avoid false-matching
+   `hover:bg-*`, `focus:bg-*`, etc. */
+html.terminal :where([class^="bg-"], [class*=" bg-"]) {
+  background-color: var(--term-elevated) !important;
+}
+
+/* The full-bleed page wrapper should be pure black, not tinted. */
+html.terminal :where(.min-h-screen) {
+  background-color: var(--term-bg) !important;
+}
+
+/* Modal backdrop stays a translucent black overlay. */
+html.terminal :where([class*="bg-black/"]) {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Code surfaces look like an actual terminal pane. */
+html.terminal :where(code, pre, kbd) {
+  background-color: rgba(0, 255, 65, 0.08) !important;
+  color: #66ff66 !important;
+}
+
+/* Strong / emphasized text reads brighter — like a bold CRT glyph. */
+html.terminal :where(strong, b) {
+  color: #80ff80 !important;
+}
+
+/* Selection: invert to phosphor. */
+html.terminal ::selection {
+  background-color: var(--term-fg);
+  color: var(--term-bg);
+  text-shadow: none;
+}
+
+/* Focus ring matches the foreground. */
+html.terminal :focus-visible {
+  outline-color: var(--term-fg) !important;
+}
+
+/* Scrollbar in green. */
+html.terminal * {
+  scrollbar-color: var(--term-border) transparent !important;
+}
+html.terminal *::-webkit-scrollbar-thumb {
+  background-color: var(--term-border) !important;
+}
+html.terminal *::-webkit-scrollbar-thumb:hover {
+  background-color: var(--term-fg-muted) !important;
+}
+
+/* Subtle scanlines for CRT ambiance. Sits above content, ignores clicks. */
+html.terminal body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 65, 0.04) 0px,
+    rgba(0, 255, 65, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* Custom scrollbar that fits the minimalist palette. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d0d0d0 transparent;
+}
+.dark * {
+  scrollbar-color: #2a2a2a transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #d0d0d0;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #b0b0b0;
+  background-clip: content-box;
+}
+.dark *::-webkit-scrollbar-thumb {
+  background-color: #2a2a2a;
+  background-clip: content-box;
+}
+.dark *::-webkit-scrollbar-thumb:hover {
+  background-color: #3a3a3a;
+  background-clip: content-box;
 }
 
 .scrollbar-hide {

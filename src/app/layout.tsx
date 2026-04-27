@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mohitsharma.co"),
@@ -8,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s | Mohit Sharma",
   },
   description:
-    "AI Engineer building production-grade LLM applications, RAG systems, and full-stack products. Explore my portfolio in your preferred style.",
+    "AI Engineer building production-grade LLM applications, RAG systems, and full-stack products. Projects, tech stack, and contact — clean and minimal.",
   keywords: [
     "Mohit Sharma",
     "AI Engineer",
@@ -32,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Mohit Sharma — AI Engineer & Full-Stack Developer",
     description:
-      "Building production-grade AI applications and full-stack products. Explore my portfolio.",
+      "Building production-grade AI applications and full-stack products. Projects, tech stack, and contact.",
     type: "website",
     url: "https://mohitsharma.co",
     siteName: "Mohit Sharma Portfolio",
@@ -72,9 +79,15 @@ export const metadata: Metadata = {
 const themeScript = `
 (function() {
   try {
-    var theme = localStorage.getItem('theme');
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
+    var stored = localStorage.getItem('theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var theme = stored;
+    if (!theme) theme = prefersDark ? 'dark' : 'light';
+    var html = document.documentElement;
+    if (theme === 'terminal') {
+      html.classList.add('dark', 'terminal');
+    } else if (theme === 'dark') {
+      html.classList.add('dark');
     }
   } catch(e) {}
 })();
@@ -99,8 +112,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
       <head>
+        <meta
+          name="theme-color"
+          content="#fafafa"
+          media="(prefers-color-scheme: light)"
+        />
+        <meta
+          name="theme-color"
+          content="#0a0a0a"
+          media="(prefers-color-scheme: dark)"
+        />
+        <link
+          rel="preconnect"
+          href="https://api.fontshare.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap"
+        />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
           type="application/ld+json"

@@ -90,30 +90,7 @@ export const projects = [
     link: "https://textberry.io/",
     github: "#",
   },
-  {
-    title: "Technova",
-    description:
-      "High-performance, responsive tech startup landing page with SEO optimization",
-    longDescription:
-      "Technova is a high-performance, responsive landing page built with Next.js. Designed to showcase innovative tech products and services, it features a clean design, lightning-fast performance, and SEO optimization to help startups gain traction.",
-    features: [
-      "Responsive and modern UI/UX",
-      "Next.js static generation for blazing-fast performance",
-      "Built-in SEO optimization for better discoverability",
-      "Smooth scrolling and interactive animations",
-      "Fully responsive on all devices",
-      "Modular and reusable component structure",
-    ],
-    techUsed: ["Next.js", "React", "TypeScript", "Tailwind CSS", "SEO"],
-    screenshots: [
-      { image: "/projects/45653244.png", label: "Landing page" },
-    ],
-    language: "TypeScript",
-    langColor: "#3178c6",
-    stars: 10,
-    link: "https://technova.io/",
-    github: "#",
-  },
+  
   {
     title: "PicShare",
     description:
@@ -140,56 +117,7 @@ export const projects = [
     link: "https://picshare.mohitcodes.com/",
     github: "#",
   },
-  {
-    title: "Muscle Magnet",
-    description:
-      "Modern, responsive landing page designed for gyms and fitness centers",
-    longDescription:
-      "Muscle Magnet is a modern, responsive landing page designed for gyms and fitness centers. Built with Next.js, it features bold visuals, strong call-to-actions, and clean layout optimized for conversions and mobile responsiveness.",
-    features: [
-      "Hero section with strong branding and CTA",
-      "Class schedules and membership pricing display",
-      "Trainer profiles and testimonial sections",
-      "Optimized performance with static generation",
-      "Fully responsive design for all screen sizes",
-      "SEO-friendly structure for improved visibility",
-    ],
-    techUsed: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-    screenshots: [
-      { image: "/projects/434468776.png", label: "Landing page" },
-      { image: "/projects/5434558987.png", label: "Features section" },
-    ],
-    language: "TypeScript",
-    langColor: "#3178c6",
-    stars: 8,
-    link: "https://musclemagnet.io/",
-    github: "#",
-  },
-  {
-    title: "Zylo",
-    description:
-      "NFT marketplace platform for buying, selling, and exploring unique digital assets",
-    longDescription:
-      "Zylo is a cutting-edge NFT marketplace platform built with Next.js, enabling users to buy, sell, and explore unique digital assets. With a sleek user interface and smooth Web3 integration, Zylo provides a seamless experience for creators and collectors.",
-    features: [
-      "Minting and listing of NFTs with metadata",
-      "Wallet integration (e.g., MetaMask) for secure transactions",
-      "NFT browsing, filtering, and detailed view pages",
-      "Responsive and modern UI design",
-      "Integration with IPFS for decentralized asset storage",
-      "Fast performance with Next.js static optimization",
-    ],
-    techUsed: ["Next.js", "React", "TypeScript", "Web3.js", "IPFS", "Tailwind CSS"],
-    screenshots: [
-      { image: "/projects/6465356.png", label: "NFT marketplace" },
-      { image: "/projects/23432432423.png", label: "Collection view" },
-    ],
-    language: "TypeScript",
-    langColor: "#3178c6",
-    stars: 15,
-    link: "",
-    github: "#",
-  },
+  
   {
     title: "AlleyBot",
     description:

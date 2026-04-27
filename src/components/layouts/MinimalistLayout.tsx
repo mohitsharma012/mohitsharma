@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
 import ProjectModal from "@/components/ProjectModal";
 import { profile, about, projects } from "@/data/site";
+import { posts } from "@/content/blog/posts";
 
-export default function MinimalistLayout({ onReset }: { onReset: () => void }) {
+export default function MinimalistLayout() {
   const [copied, setCopied] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const selectedProject = selectedIdx !== null ? projects[selectedIdx] : null;
@@ -22,7 +24,7 @@ export default function MinimalistLayout({ onReset }: { onReset: () => void }) {
     setTimeout(() => setCopied(false), 2000);
   };
   return (
-    <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0a] text-[#1a1a1a] dark:text-[#e5e5e5] transition-colors duration-300" style={{ fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0a] text-[#1a1a1a] dark:text-[#e5e5e5] transition-colors duration-300">
       {selectedProject && selectedIdx !== null && (
         <ProjectModal
           project={selectedProject}
@@ -31,30 +33,23 @@ export default function MinimalistLayout({ onReset }: { onReset: () => void }) {
           onNext={selectedIdx < projects.length - 1 ? () => setSelectedIdx(selectedIdx + 1) : null}
         />
       )}
-      {/* Sticky top bar */}
-      <div className="sticky top-0 z-40 bg-[#111] dark:bg-[#111]">
-        <div className="max-w-3xl mx-auto px-6 flex items-center justify-end gap-4 h-10">
-          <button
-            onClick={onReset}
-            className="text-[11px] text-white/50 hover:text-white transition-colors tracking-wide cursor-pointer"
-          >
-            Switch view
-          </button>
-          <div className="text-white/50 hover:text-white transition-colors">
-            <ThemeToggle />
-          </div>
+
+      {/* Floating theme toggle */}
+      <div className="fixed top-4 right-4 md:top-6 md:right-6 z-40">
+        <div className="w-9 h-9 flex items-center justify-center rounded-full border border-[#e0e0e0] dark:border-[#2a2a2a] bg-white/80 dark:bg-[#111]/80 backdrop-blur-sm text-[#555] dark:text-[#999] shadow-sm">
+          <ThemeToggle />
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-6 py-12 md:py-20">
+      <div className="max-w-4xl mx-auto px-6 py-12 md:py-20">
 
         {/* Hero */}
         <header className="mb-12 md:mb-20">
-          <div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-6 mb-6 md:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-4 mb-6 md:mb-8">
             <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden shrink-0">
               <Image src={profile.avatar} alt={profile.name} width={80} height={80} className="object-cover w-full h-full" priority />
             </div>
-            <div className="pb-0.5">
+            <div>
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight leading-none mb-1">{profile.name}</h1>
               {profile.location && <p className="text-sm text-[#888] dark:text-[#666]">{profile.location}</p>}
             </div>
@@ -92,12 +87,20 @@ export default function MinimalistLayout({ onReset }: { onReset: () => void }) {
               Instagram
             </a>
             )}
+            <Link href="/blog" className="inline-flex items-center gap-1.5 text-xs font-medium px-3.5 py-2 rounded-lg border border-[#e0e0e0] dark:border-[#2a2a2a] text-[#555] dark:text-[#999] hover:border-[#bbb] dark:hover:border-[#444] transition-colors">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 2h7l3 3v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z" />
+                <path d="M10 2v3h3" />
+                <path d="M5 8h6M5 11h4" />
+              </svg>
+              Writing
+            </Link>
           </div>
         </header>
 
         {/* About */}
         <section className="mb-16">
-          <h2 className="text-[11px] uppercase tracking-[0.15em] font-semibold text-[#bbb] dark:text-[#444] mb-5">About</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.15em] font-semibold text-[#666] dark:text-[#888] mb-5">About</h2>
           <div className="space-y-4">
             {about.paragraphs.map((text, i) => (
               <p
@@ -111,7 +114,7 @@ export default function MinimalistLayout({ onReset }: { onReset: () => void }) {
 
         {/* Projects */}
         <section className="mb-16">
-          <h2 className="text-[11px] uppercase tracking-[0.15em] font-semibold text-[#bbb] dark:text-[#444] mb-5">Projects</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.15em] font-semibold text-[#666] dark:text-[#888] mb-5">Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {projects.map((project) => (
               <button
@@ -130,7 +133,7 @@ export default function MinimalistLayout({ onReset }: { onReset: () => void }) {
                 <p className="text-xs leading-relaxed text-[#888] dark:text-[#666]">
                   {project.description}
                 </p>
-                <div className="flex items-center gap-1 mt-3 text-[11px] text-[#bbb] dark:text-[#444]">
+                <div className="flex items-center gap-1 mt-3 text-[11px] text-[#bbb] dark:text-[#666]">
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
                   {project.stars}
                 </div>
@@ -139,24 +142,38 @@ export default function MinimalistLayout({ onReset }: { onReset: () => void }) {
           </div>
         </section>
 
-        {/* Stack */}
-        <section className="mb-16">
-          <h2 className="text-[11px] uppercase tracking-[0.15em] font-semibold text-[#bbb] dark:text-[#444] mb-5">Stack</h2>
-          <div className="flex flex-wrap gap-2">
-            {about.techStack.map((tech) => (
-              <span
-                key={tech}
-                className="text-xs px-3 py-1.5 rounded-lg bg-[#f0f0f0] dark:bg-[#161616] text-[#555] dark:text-[#888] border border-transparent hover:border-[#ddd] dark:hover:border-[#2a2a2a] transition-colors"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </section>
+        {/* Writing */}
+        {posts.length > 0 && (
+          <section className="mb-16">
+            <div className="flex items-baseline justify-between mb-5">
+              <h2 className="text-[11px] uppercase tracking-[0.15em] font-semibold text-[#666] dark:text-[#888]">Writing</h2>
+              <Link href="/blog" className="text-[11px] text-[#888] dark:text-[#666] hover:text-[#1a1a1a] dark:hover:text-white transition-colors">
+                All posts →
+              </Link>
+            </div>
+            <ul className="divide-y divide-[#eaeaea] dark:divide-[#1e1e1e] border-y border-[#eaeaea] dark:border-[#1e1e1e]">
+              {posts.slice(0, 3).map((post) => (
+                <li key={post.slug}>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="group flex items-baseline justify-between gap-4 py-3 transition-colors"
+                  >
+                    <span className="text-sm text-[#1a1a1a] dark:text-[#e5e5e5] group-hover:text-[#555] dark:group-hover:text-[#bbb] transition-colors truncate">
+                      {post.title}
+                    </span>
+                    <time dateTime={post.date} className="text-[11px] text-[#bbb] dark:text-[#666] tabular-nums shrink-0">
+                      {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                    </time>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {/* Contact */}
         <section className="mb-16">
-          <h2 className="text-[11px] uppercase tracking-[0.15em] font-semibold text-[#bbb] dark:text-[#444] mb-5">Contact</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.15em] font-semibold text-[#666] dark:text-[#888] mb-5">Contact</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm">
             <a href={`mailto:${profile.email}`} className="flex items-center gap-2 py-1.5 text-[#555] dark:text-[#999] hover:text-[#1a1a1a] dark:hover:text-white transition-colors">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" className="shrink-0 opacity-40"><path d="M1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25v-8.5C0 2.784.784 2 1.75 2ZM1.5 12.251c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V5.809L8.38 9.397a.75.75 0 0 1-.76 0L1.5 5.809v6.442Zm13-8.181v-.32a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25v.32L8 7.88Z"/></svg>
@@ -181,7 +198,7 @@ export default function MinimalistLayout({ onReset }: { onReset: () => void }) {
 
         {/* Footer */}
         <footer className="pt-8 border-t border-[#eee] dark:border-[#1a1a1a]">
-          <p className="text-[11px] text-[#ccc] dark:text-[#333]">
+          <p className="text-[11px] text-[#bbb] dark:text-[#555]">
             &copy; {new Date().getFullYear()} {profile.name}
           </p>
         </footer>

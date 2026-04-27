@@ -1,14 +1,5 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import RoleChooser, { type Role } from "@/components/RoleChooser";
+import MinimalistLayout from "@/components/layouts/MinimalistLayout";
 
 export default function Home() {
-  const router = useRouter();
-
-  const handleSelect = (role: Role) => {
-    router.push(`/${role}`);
-  };
-
-  return <RoleChooser onSelect={handleSelect} />;
+  return <MinimalistLayout />;
 }
