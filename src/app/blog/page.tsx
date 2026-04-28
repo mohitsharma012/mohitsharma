@@ -2,19 +2,54 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
 import { posts } from "@/content/blog/posts";
+import { profile } from "@/data/site";
+
+const SITE_URL = "https://mohitsharma.co";
 
 export const metadata: Metadata = {
   title: "Writing — Mohit Sharma",
   description:
     "Essays and notes from Mohit Sharma on building LLM applications, shipping AI products, and the craft of full-stack engineering.",
-  alternates: { canonical: "https://mohitsharma.co/blog" },
+  alternates: { canonical: `${SITE_URL}/blog` },
   openGraph: {
     title: "Writing — Mohit Sharma",
     description:
       "Essays and notes from Mohit Sharma on building LLM applications, shipping AI products, and the craft of full-stack engineering.",
     type: "website",
-    url: "https://mohitsharma.co/blog",
+    url: `${SITE_URL}/blog`,
   },
+};
+
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: "Writing — Mohit Sharma",
+  description:
+    "Notes on building AI systems, shipping products, and what actually works in practice.",
+  url: `${SITE_URL}/blog`,
+  author: {
+    "@type": "Person",
+    name: profile.name,
+    url: SITE_URL,
+  },
+  blogPost: posts.map((post) => ({
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    url: `${SITE_URL}/blog/${post.slug}`,
+    datePublished: post.date,
+    dateModified: post.lastModified ?? post.date,
+    author: { "@type": "Person", name: profile.name, url: SITE_URL },
+  })),
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+    { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+  ],
 };
 
 function formatDate(iso: string) {
@@ -28,6 +63,16 @@ function formatDate(iso: string) {
 export default function BlogIndexPage() {
   return (
     <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0a] text-[#1a1a1a] dark:text-[#e5e5e5] transition-colors duration-300">
+      {/* Structured data — Blog + BreadcrumbList */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       {/* Floating theme toggle */}
       <div className="fixed top-4 right-4 md:top-6 md:right-6 z-40">
         <div className="w-9 h-9 flex items-center justify-center rounded-full border border-[#e0e0e0] dark:border-[#2a2a2a] bg-white/80 dark:bg-[#111]/80 backdrop-blur-sm text-[#555] dark:text-[#999] shadow-sm">
@@ -85,6 +130,13 @@ export default function BlogIndexPage() {
             ))}
           </ul>
         )}
+
+        {/* Footer */}
+        <footer className="mt-16 md:mt-20 pt-8 border-t border-[#eee] dark:border-[#1a1a1a]">
+          <p className="text-[11px] text-[#bbb] dark:text-[#555]">
+            &copy; {new Date().getFullYear()} {profile.name}
+          </p>
+        </footer>
       </div>
     </div>
   );

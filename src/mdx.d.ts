@@ -6,7 +6,9 @@ declare module "*.mdx" {
     title: string;
     description: string;
     date: string;
+    lastModified?: string;
     readingTime?: string;
+    faqs?: { question: string; answer: string }[];
   };
 
   const MDXContent: (props: MDXProps) => JSX.Element;
