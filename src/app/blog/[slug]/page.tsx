@@ -3,9 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ThemeToggle from "@/components/ThemeToggle";
 import { posts, getPost, type Post } from "@/content/blog/posts";
-import { profile } from "@/data/site";
-
-const SITE_URL = "https://mohitsharma.co";
+import { profile, SITE_URL } from "@/data/site";
 
 function buildArticleSchema(post: Post) {
   const url = `${SITE_URL}/blog/${post.slug}`;

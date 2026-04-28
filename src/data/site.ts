@@ -1,3 +1,6 @@
+/** Canonical site origin. Used by sitemap, robots, schema, and metadata. */
+export const SITE_URL = "https://mohitsharma.co";
+
 export const profile = {
   name: "Mohit Sharma",
   username: "mohitsharma012",
@@ -16,6 +19,7 @@ export const profile = {
 
 export const projects = [
   {
+    slug: "careeredge",
     title: "CareerEdge",
     description:
       "AI-powered platform that generates tailored, ATS-optimized resumes based on job descriptions",
@@ -40,6 +44,7 @@ export const projects = [
     github: "#",
   },
   {
+    slug: "pandaui",
     title: "PandaUI",
     description:
       "Sleek React component library designed to accelerate modern web development with SEO optimization",
@@ -66,6 +71,7 @@ export const projects = [
     github: "#",
   },
   {
+    slug: "textberry",
     title: "Textberry",
     description:
       "Intelligent text processing platform for smart text analysis, summarization, and keyword extraction",
@@ -92,6 +98,7 @@ export const projects = [
   },
   
   {
+    slug: "picshare",
     title: "PicShare",
     description:
       "Social image sharing platform with real-time features, authentication, and sleek interface",
@@ -119,6 +126,7 @@ export const projects = [
   },
   
   {
+    slug: "alleybot",
     title: "AlleyBot",
     description:
       "Intelligent AI chatbot powered by OpenAI with real-time conversations and emotional awareness",
@@ -144,6 +152,7 @@ export const projects = [
     github: "#",
   },
   {
+    slug: "devilsplanet",
     title: "DevilsPlanet",
     description:
       "Sleek e-commerce platform for trendy clothing and streetwear with secure checkout",
@@ -170,6 +179,12 @@ export const projects = [
     github: "#",
   },
 ];
+
+export type Project = (typeof projects)[number];
+
+export function getProject(slug: string): Project | undefined {
+  return projects.find((p) => p.slug === slug);
+}
 
 export const tabs: { name: string; count?: number }[] = [
   { name: "Overview" },

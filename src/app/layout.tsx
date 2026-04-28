@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { SITE_URL, profile } from "@/data/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -9,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mohitsharma.co"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Mohit Sharma — AI Engineer & Full-Stack Developer",
     template: "%s | Mohit Sharma",
@@ -30,23 +31,23 @@ export const metadata: Metadata = {
     "TypeScript",
     "Portfolio",
   ],
-  authors: [{ name: "Mohit Sharma", url: "https://mohitsharma.co" }],
-  creator: "Mohit Sharma",
+  authors: [{ name: profile.name, url: SITE_URL }],
+  creator: profile.name,
   icons: {
-    icon: "/mohit-sharma.png",
-    apple: "/mohit-sharma.png",
+    icon: profile.avatar,
+    apple: profile.avatar,
   },
   openGraph: {
     title: "Mohit Sharma — AI Engineer & Full-Stack Developer",
     description:
       "Building production-grade AI applications and full-stack products. Projects, tech stack, and contact.",
     type: "website",
-    url: "https://mohitsharma.co",
+    url: SITE_URL,
     siteName: "Mohit Sharma Portfolio",
     locale: "en_US",
     images: [
       {
-        url: "/mohit-sharma.png",
+        url: profile.avatar,
         width: 400,
         height: 400,
         alt: "Mohit Sharma — AI Engineer",
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
     title: "Mohit Sharma — AI Engineer & Full-Stack Developer",
     description:
       "Building production-grade AI applications and full-stack products.",
-    images: ["/mohit-sharma.png"],
+    images: [profile.avatar],
   },
   robots: {
     index: true,
@@ -72,7 +73,10 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://mohitsharma.co",
+    canonical: SITE_URL,
+    types: {
+      "application/rss+xml": [{ url: `${SITE_URL}/feed.xml`, title: "Writing — Mohit Sharma" }],
+    },
   },
 };
 
@@ -93,14 +97,11 @@ const themeScript = `
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Mohit Sharma",
-  url: "https://mohitsharma.co",
+  name: profile.name,
+  url: SITE_URL,
+  image: `${SITE_URL}${profile.avatar}`,
   jobTitle: "AI Engineer & Full-Stack Developer",
-  sameAs: [
-    "https://github.com/mohitsharma012",
-    "https://linkedin.com/in/mohitsharma012",
-    "https://www.instagram.com/_.mohit_012/",
-  ],
+  sameAs: [profile.github, profile.linkedin, profile.instagram].filter(Boolean),
 };
 
 export default function RootLayout({

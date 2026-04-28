@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
 import { posts } from "@/content/blog/posts";
-import { profile } from "@/data/site";
-
-const SITE_URL = "https://mohitsharma.co";
+import { profile, SITE_URL } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Writing — Mohit Sharma",
@@ -95,7 +93,7 @@ export default function BlogIndexPage() {
         {/* Header */}
         <header className="mb-12 md:mb-16">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3">
-           Notes
+            Writing
           </h1>
           <p className="text-base leading-relaxed text-[#555] dark:text-[#999] max-w-xl">
           Notes on building AI systems, shipping products, and what actually works in practice.

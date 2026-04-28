@@ -1,39 +1,13 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
-import ProjectModal from "@/components/ProjectModal";
+import EmailCopyButton from "@/components/EmailCopyButton";
 import { profile, about, projects } from "@/data/site";
 import { posts } from "@/content/blog/posts";
 
 export default function MinimalistLayout() {
-  const [copied, setCopied] = useState(false);
-  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
-  const selectedProject = selectedIdx !== null ? projects[selectedIdx] : null;
-
-  useEffect(() => {
-    document.body.style.overflow = selectedIdx !== null ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [selectedIdx]);
-
-  const copyEmail = () => {
-    navigator.clipboard.writeText(profile.email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
   return (
     <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0a] text-[#1a1a1a] dark:text-[#e5e5e5] transition-colors duration-300">
-      {selectedProject && selectedIdx !== null && (
-        <ProjectModal
-          project={selectedProject}
-          onClose={() => setSelectedIdx(null)}
-          onPrev={selectedIdx > 0 ? () => setSelectedIdx(selectedIdx - 1) : null}
-          onNext={selectedIdx < projects.length - 1 ? () => setSelectedIdx(selectedIdx + 1) : null}
-        />
-      )}
-
       {/* Floating theme toggle */}
       <div className="fixed top-4 right-4 md:top-6 md:right-6 z-40">
         <div className="w-9 h-9 flex items-center justify-center rounded-full border border-[#e0e0e0] dark:border-[#2a2a2a] bg-white/80 dark:bg-[#111]/80 backdrop-blur-sm text-[#555] dark:text-[#999] shadow-sm">
@@ -60,19 +34,7 @@ export default function MinimalistLayout() {
 
           {/* Quick links row */}
           <div className="flex flex-wrap items-center gap-3 md:gap-4 mt-6">
-            <button onClick={copyEmail} className="inline-flex items-center gap-1.5 text-xs font-medium px-3.5 py-2 rounded-lg bg-[#1a1a1a] dark:bg-white text-white dark:text-[#1a1a1a] hover:opacity-80 transition-all cursor-pointer">
-              {copied ? (
-                <>
-                  <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>
-                  Email copied!
-                </>
-              ) : (
-                <>
-                  <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25v-8.5C0 2.784.784 2 1.75 2ZM1.5 12.251c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V5.809L8.38 9.397a.75.75 0 0 1-.76 0L1.5 5.809v6.442Zm13-8.181v-.32a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25v.32L8 7.88Z"/></svg>
-                  Say hello
-                </>
-              )}
-            </button>
+            <EmailCopyButton email={profile.email} />
             <a href={profile.github} target="_blank" rel="noopener" className="inline-flex items-center gap-1.5 text-xs font-medium px-3.5 py-2 rounded-lg border border-[#e0e0e0] dark:border-[#2a2a2a] text-[#555] dark:text-[#999] hover:border-[#bbb] dark:hover:border-[#444] transition-colors">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
               GitHub
@@ -114,13 +76,18 @@ export default function MinimalistLayout() {
 
         {/* Projects */}
         <section className="mb-16">
-          <h2 className="text-[11px] uppercase tracking-[0.15em] font-semibold text-[#666] dark:text-[#888] mb-5">Projects</h2>
+          <div className="flex items-baseline justify-between mb-5">
+            <h2 className="text-[11px] uppercase tracking-[0.15em] font-semibold text-[#666] dark:text-[#888]">Projects</h2>
+            <Link href="/projects" className="text-[11px] text-[#888] dark:text-[#666] hover:text-[#1a1a1a] dark:hover:text-white transition-colors">
+              All projects →
+            </Link>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {projects.map((project) => (
-              <button
-                key={project.title}
-                onClick={() => setSelectedIdx(projects.indexOf(project))}
-                className="group block p-5 rounded-xl border border-[#eaeaea] dark:border-[#1e1e1e] hover:border-[#ccc] dark:hover:border-[#333] bg-white dark:bg-[#111] transition-all duration-200 hover:shadow-sm text-left cursor-pointer w-full"
+              <Link
+                key={project.slug}
+                href={`/projects/${project.slug}`}
+                className="group block p-5 rounded-xl border border-[#eaeaea] dark:border-[#1e1e1e] hover:border-[#ccc] dark:hover:border-[#333] bg-white dark:bg-[#111] transition-all duration-200 hover:shadow-sm text-left"
               >
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-sm font-semibold group-hover:text-black dark:group-hover:text-white transition-colors">
@@ -134,10 +101,10 @@ export default function MinimalistLayout() {
                   {project.description}
                 </p>
                 <div className="flex items-center gap-1 mt-3 text-[11px] text-[#bbb] dark:text-[#666]">
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
                   {project.stars}
                 </div>
-              </button>
+              </Link>
             ))}
           </div>
         </section>
