@@ -5,7 +5,7 @@ export const profile = {
   name: "Mohit Sharma",
   username: "mohitsharma012",
   avatar: "/mohit-sharma.png",
-  bio: "AI Engineer & Full-Stack Developer. Building production-grade LLM applications, NLP pipelines, and scalable products.",
+  bio: "I build LLM-powered products end-to-end, from the prompts and pipelines to the UI people actually click.",
   organization: "",
   location: "",
   email: "stayer.mohit@gmail.com",
@@ -22,7 +22,7 @@ export const projects = [
     slug: "careeredge",
     title: "CareerEdge",
     description:
-      "AI-powered platform that generates tailored, ATS-optimized resumes based on job descriptions",
+      "Paste a job description, get a resume tailored to it. Built to pass ATS filters, not just look good.",
     longDescription:
       "An AI-powered platform that generates tailored, ATS-optimized resumes based on user-provided job descriptions. Users can input a job description, and the system crafts a customized resume ready for download.",
     features: [
@@ -47,7 +47,7 @@ export const projects = [
     slug: "pandaui",
     title: "PandaUI",
     description:
-      "Sleek React component library designed to accelerate modern web development with SEO optimization",
+      "A React component library for shipping marketing sites that load fast and rank well. Opinionated defaults, TypeScript-first.",
     longDescription:
       "PandaUI is a sleek and developer-friendly React component library designed to accelerate modern web development. Built with TypeScript and optimized for Next.js and FastAPI applications, it offers a comprehensive set of customizable components that enhance SEO performance and Google rankings.",
     features: [
@@ -74,9 +74,9 @@ export const projects = [
     slug: "textberry",
     title: "Textberry",
     description:
-      "Intelligent text processing platform for smart text analysis, summarization, and keyword extraction",
+      "A toolkit for messy text. Summarize, extract keywords, pull out entities. Originally built for marketers; now an API I keep reaching for.",
     longDescription:
-      "Textberry is a Python and Django-based platform designed for smart text analysis and manipulation. It offers a suite of tools for content transformation, summarization, keyword extraction, and more — perfect for writers, marketers, and developers working with textual data.",
+      "Textberry is a Python and Django-based platform designed for smart text analysis and manipulation. It offers a suite of tools for content transformation, summarization, keyword extraction, and more. Perfect for writers, marketers, and developers working with textual data.",
     features: [
       "Text summarization using NLP techniques",
       "Keyword and entity extraction",
@@ -101,7 +101,7 @@ export const projects = [
     slug: "picshare",
     title: "PicShare",
     description:
-      "Social image sharing platform with real-time features, authentication, and sleek interface",
+      "A small Instagram-style image feed I built to learn Firebase real-time and Next.js together. Upload, share, like, repeat.",
     longDescription:
       "PicShare is a modern web application for uploading, sharing, and exploring images. Built with Next.js, MongoDB, and Firebase, it delivers a seamless user experience with real-time features, secure authentication, and a sleek interface.",
     features: [
@@ -129,7 +129,7 @@ export const projects = [
     slug: "alleybot",
     title: "AlleyBot",
     description:
-      "Intelligent AI chatbot powered by OpenAI with real-time conversations and emotional awareness",
+      "A chatbot that remembers context and tries to read the room. An early experiment in giving GPT a little personality.",
     longDescription:
       "AlleyBot is an intelligent chatbot powered by OpenAI, designed to be a friendly and engaging companion. Built with Node.js and Next.js, AlleyBot offers real-time conversations, emotional awareness, and a natural chatting experience.",
     features: [
@@ -155,7 +155,7 @@ export const projects = [
     slug: "devilsplanet",
     title: "DevilsPlanet",
     description:
-      "Sleek e-commerce platform for trendy clothing and streetwear with secure checkout",
+      "A streetwear storefront, end-to-end: catalog, cart, Stripe checkout, admin panel. Where I learned how much an e-commerce admin actually needs.",
     longDescription:
       "DevilsPlanet is a sleek and modern e-commerce platform for trendy clothing and streetwear. Built with React and Node.js, the website delivers a fast, intuitive shopping experience with dynamic product listings and secure checkout.",
     features: [
@@ -193,8 +193,9 @@ export const tabs: { name: string; count?: number }[] = [
 
 export const about = {
   paragraphs: [
-    "I'm an **AI Engineer** with 2+ years of experience building production-grade LLM applications, NLP pipelines, and RAG architectures. I work across the full stack — from designing AI systems with LangChain and LangGraph to building fast web apps with React and FastAPI.",
-    "Currently building LLM-powered tools with OpenAI, Gemini, and Groq. Previously shipped backend systems and launched products like CareerEdge and PandaUI.",
+    "I'm an **AI engineer**, but the honest version is: I'm a builder who got obsessed with LLMs. The last couple of years I've been shipping production AI (RAG pipelines, agentic tools, and the evals nobody talks about), mostly with **LangChain**, **LangGraph**, and whatever model is winning that week (OpenAI, Gemini, Groq).",
+    "I came up doing full-stack work (Django, FastAPI, Next.js), so I tend to build AI features the way I'd build any product: as small as possible, instrumented, and within reach of a real user. Some of that ended up in **CareerEdge** and **PandaUI**; the rest lives in the side projects below.",
+    "If you're working on something interesting at the intersection of LLMs and product, I'd love to hear about it. My email's down at the bottom.",
   ],
   techStack: [
     "Python", "TypeScript", "LangChain", "LangGraph", "spaCy",
