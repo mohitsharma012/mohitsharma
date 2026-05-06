@@ -58,12 +58,12 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.01em;
 }
 
-/* Justify body copy. Hyphenation reduces the rivers of whitespace
-   that justified text otherwise produces, especially on narrow viewports. */
+/* Body copy: left-aligned with `text-wrap: pretty` so the renderer balances
+   the last few lines and avoids single-word orphans. Justification is
+   intentionally avoided — on the web it produces uneven word spacing
+   ("rivers") that hyphenation alone doesn't fully repair. */
 p {
-  text-align: justify;
-  hyphens: auto;
-  -webkit-hyphens: auto;
+  text-wrap: pretty;
 }
 
 .theme-github {

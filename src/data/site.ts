@@ -19,6 +19,33 @@ export const profile = {
 
 export const projects = [
   {
+    slug: "ayeface",
+    title: "AyeFace Merchant Dashboard",
+    description:
+      "Built the rewards, referrals, store, and advertisement modules for AyeFace's merchant platform. React on top, Node.js, Firebase, and Kafka underneath.",
+    longDescription:
+      "AyeFace is a consumer-facing merchant platform. As part of the team, I shipped several core modules: rewards, referrals, store management, and an advertisement system that supports both in-app and outreach ad types. I worked across the full stack: designing the backend, modeling the database, wiring up Firebase push notifications, and building the React frontend. The platform is built to drive customer engagement, incentivize referrals, manage store transactions, and track ad performance across modules.",
+    features: [
+      "Rewards, referrals, store, and advertisement modules built end-to-end",
+      "Advertisement system supporting both in-app and outreach ad types",
+      "Push notifications integrated via Firebase Cloud Messaging",
+      "Event-driven backend with Apache Kafka for cross-module messaging",
+      "Database design and modeling for multi-merchant tenancy",
+      "ReactJS merchant dashboard with role-based views and analytics",
+    ],
+    techUsed: ["React", "Node.js", "Firebase", "Apache Kafka", "Database"],
+    screenshots: [
+      { image: "/projects/ayeface-store.png", label: "Store management" },
+      { image: "/projects/ayeface-notifications.png", label: "Notifications" },
+      { image: "/projects/ayeface-ads.png", label: "Advertisements and referrals" },
+    ],
+    language: "JavaScript",
+    langColor: "#f1e05a",
+    stars: 35,
+    link: "https://aye-ai.org/",
+    github: "#",
+  },
+  {
     slug: "careeredge",
     title: "CareerEdge",
     description:

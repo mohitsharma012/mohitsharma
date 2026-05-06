@@ -28,7 +28,7 @@ export default function MinimalistLayout() {
               {profile.location && <p className="text-sm text-[#888] dark:text-[#666]">{profile.location}</p>}
             </div>
           </div>
-          <p className="text-base leading-relaxed text-[#555] dark:text-[#999] max-w-2xl">
+          <p className="text-[15px] md:text-base leading-[1.65] tracking-[-0.005em] text-[#555] dark:text-[#999] max-w-2xl text-pretty">
             {profile.bio}
           </p>
 
@@ -67,7 +67,7 @@ export default function MinimalistLayout() {
             {about.paragraphs.map((text, i) => (
               <p
                 key={i}
-                className="text-[15px] leading-[1.7] text-[#444] dark:text-[#aaa]"
+                className="text-[15px] text-[#444] dark:text-[#aaa] text-pretty"
                 dangerouslySetInnerHTML={{ __html: text.replace(/\*\*(.*?)\*\*/g, "<strong class='text-[#1a1a1a] dark:text-[#e5e5e5] font-semibold'>$1</strong>") }}
               />
             ))}
@@ -89,14 +89,9 @@ export default function MinimalistLayout() {
                 href={`/projects/${project.slug}`}
                 className="group block p-5 rounded-xl border border-[#eaeaea] dark:border-[#1e1e1e] hover:border-[#ccc] dark:hover:border-[#333] bg-white dark:bg-[#111] transition-all duration-200 hover:shadow-sm text-left"
               >
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-sm font-semibold group-hover:text-black dark:group-hover:text-white transition-colors">
-                    {project.title}
-                  </h3>
-                  <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#f5f5f5] dark:bg-[#1a1a1a] text-[#888] dark:text-[#666]">
-                    {project.language}
-                  </span>
-                </div>
+                <h3 className="text-sm font-semibold mb-2 group-hover:text-black dark:group-hover:text-white transition-colors">
+                  {project.title}
+                </h3>
                 <p className="text-xs leading-relaxed text-[#888] dark:text-[#666]">
                   {project.description}
                 </p>

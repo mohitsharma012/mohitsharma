@@ -95,14 +95,9 @@ export default function ProjectsIndexPage() {
                 href={`/projects/${project.slug}`}
                 className="group block p-5 rounded-xl border border-[#eaeaea] dark:border-[#1e1e1e] hover:border-[#ccc] dark:hover:border-[#333] bg-white dark:bg-[#111] transition-all duration-200 hover:shadow-sm"
               >
-                <div className="flex items-center justify-between mb-2">
-                  <h2 className="text-sm font-semibold group-hover:text-black dark:group-hover:text-white transition-colors">
-                    {project.title}
-                  </h2>
-                  <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#f5f5f5] dark:bg-[#1a1a1a] text-[#888] dark:text-[#666]">
-                    {project.language}
-                  </span>
-                </div>
+                <h2 className="text-sm font-semibold mb-2 group-hover:text-black dark:group-hover:text-white transition-colors">
+                  {project.title}
+                </h2>
                 <p className="text-xs leading-relaxed text-[#888] dark:text-[#666]">
                   {project.description}
                 </p>

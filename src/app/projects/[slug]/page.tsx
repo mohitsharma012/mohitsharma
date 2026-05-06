@@ -166,14 +166,9 @@ export default async function ProjectPage({
 
         {/* Header */}
         <header className="mb-10">
-          <div className="flex items-center gap-3 mb-3">
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight leading-tight text-[#1a1a1a] dark:text-[#e5e5e5]">
-              {project.title}
-            </h1>
-            <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#f5f5f5] dark:bg-[#1a1a1a] text-[#888] dark:text-[#666]">
-              {project.language}
-            </span>
-          </div>
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight leading-tight text-[#1a1a1a] dark:text-[#e5e5e5] mb-3">
+            {project.title}
+          </h1>
           <p className="text-base leading-relaxed text-[#555] dark:text-[#999] max-w-2xl">
             {project.description}
           </p>
