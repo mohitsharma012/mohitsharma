@@ -94,7 +94,7 @@ export const projects = [
     language: "TypeScript",
     langColor: "#3178c6",
     stars: 28,
-    link: "https://pandaui.co/",
+    link: "",
     github: "#",
   },
   {
