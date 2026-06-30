@@ -1,0 +1,36 @@
+# Mohit Sharma — AI Engineer & Full-Stack Developer
+
+> Personal portfolio and writing of Mohit Sharma, an AI engineer who builds production-grade LLM applications, RAG systems, and full-stack products.
+
+## Site
+
+- Homepage: https://mohitsharma.co
+- Blog: https://mohitsharma.co/blog
+- Projects: https://mohitsharma.co/projects
+
+## About Mohit
+
+Mohit Sharma is an AI engineer with 2+ years of experience shipping production AI systems. He specializes in RAG pipelines, agentic tools, and LLM-powered products, primarily using LangChain, LangGraph, OpenAI, Gemini, and Groq. His full-stack background (Django, FastAPI, Next.js, React) means he builds AI features as complete products — instrumented, user-facing, and maintainable.
+
+Contact: stayer.mohit@gmail.com
+GitHub: https://github.com/mohitsharma012
+LinkedIn: https://linkedin.com/in/mohitsharma012
+
+## Projects
+
+- AyeFace Merchant Dashboard (https://mohitsharma.co/projects/ayeface): Rewards, referrals, store, and advertisement modules built on React, Node.js, Firebase, and Apache Kafka.
+- CareerEdge (https://mohitsharma.co/projects/careeredge): AI-powered ATS-optimized resume generator using OpenAI, Next.js, FastAPI, and PostgreSQL.
+- PandaUI (https://mohitsharma.co/projects/pandaui): TypeScript-first React component library optimized for SEO and Next.js static sites.
+- Textberry (https://mohitsharma.co/projects/textberry): NLP text analysis API for summarization, keyword extraction, and entity recognition, built on Python and Django.
+- PicShare (https://mohitsharma.co/projects/picshare): Real-time image sharing platform using Next.js, MongoDB, and Firebase.
+- AlleyBot (https://mohitsharma.co/projects/alleybot): Contextual chatbot with sliding-window memory and sentiment-aware responses, powered by OpenAI.
+- DevilsPlanet (https://mohitsharma.co/projects/devilsplanet): Full e-commerce storefront with Stripe checkout and admin dashboard, built on React, Node.js, and MongoDB.
+
+## Blog
+
+- The STAR Method, Done Right: A 2026 Framework for Engineers (https://mohitsharma.co/blog/star-method-engineer-interviews-2026)
+- Behavioral Interview Questions: 2026 Guide With STAR Answers (https://mohitsharma.co/blog/behavioral-interview-questions-2026-star-answers)
+
+## Tech Stack
+
+Python, TypeScript, LangChain, LangGraph, spaCy, FastAPI, Django, React, Next.js, PostgreSQL, MongoDB, Redis, Docker, AWS, Vercel

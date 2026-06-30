@@ -23,8 +23,9 @@ export const projects = [
     title: "AyeFace Merchant Dashboard",
     description:
       "Built the rewards, referrals, store, and advertisement modules for AyeFace's merchant platform. React on top, Node.js, Firebase, and Kafka underneath.",
+    lastModified: "2025-11-20",
     longDescription:
-      "AyeFace is a consumer-facing merchant platform. As part of the team, I shipped several core modules: rewards, referrals, store management, and an advertisement system that supports both in-app and outreach ad types. I worked across the full stack: designing the backend, modeling the database, wiring up Firebase push notifications, and building the React frontend. The platform is built to drive customer engagement, incentivize referrals, manage store transactions, and track ad performance across modules.",
+      "AyeFace is a consumer-facing merchant platform where I shipped four core modules end-to-end: rewards, referrals, store management, and an advertisement system. The ad system was the most architecturally interesting piece — it needed to support two distinct ad types (in-app banners and outreach campaigns) with separate billing models and performance dashboards, all within the same data model.\n\nThe biggest challenge was cross-module consistency. Reward points earned from a purchase needed to instantly reflect in the referral dashboard and the store wallet. I solved this with an event-driven architecture using Apache Kafka: each module published domain events, and downstream consumers updated their own state independently. This decoupled the modules while keeping data eventually consistent at sub-second latency.\n\nOn the frontend, I built the merchant dashboard in React with role-based views — store owners saw different analytics than regional managers. Firebase Cloud Messaging handled push notifications for referral conversions and ad performance alerts. The biggest lesson was how much Kafka simplifies adding new modules later: onboarding a fifth module required zero changes to the existing four.",
     features: [
       "Rewards, referrals, store, and advertisement modules built end-to-end",
       "Advertisement system supporting both in-app and outreach ad types",
@@ -50,8 +51,9 @@ export const projects = [
     title: "CareerEdge",
     description:
       "Paste a job description, get a resume tailored to it. Built to pass ATS filters, not just look good.",
+    lastModified: "2026-03-15",
     longDescription:
-      "An AI-powered platform that generates tailored, ATS-optimized resumes based on user-provided job descriptions. Users can input a job description, and the system crafts a customized resume ready for download.",
+      "CareerEdge started from a real frustration: generic resumes get filtered out by ATS before a human ever reads them. The insight was that every job description is its own keyword document — so the resume should mirror it.\n\nThe core pipeline uses OpenAI to extract structured requirements from a job description (skills, seniority signals, must-haves vs. nice-to-haves), then maps those against the user's experience to generate a tailored resume that ranks high on ATS keyword scoring. I spent most of the engineering time on the prompt design: the first versions hallucinated experience the user hadn't listed. The fix was a two-step approach — extract user facts first, then compose — with a constraint prompt that refused to invent details not present in the input.\n\nThe backend is FastAPI with PostgreSQL storing user profiles and generation history. The front end is Next.js with a live preview pane that shows ATS score changes in real time as the resume updates. The biggest takeaway: structured output from LLMs is hard to get right at scale, and Pydantic validation as the output schema saved hours of debugging downstream.",
     features: [
       "AI-driven resume creation aligned with specific job descriptions",
       "Seamless resume download functionality",
@@ -75,8 +77,9 @@ export const projects = [
     title: "PandaUI",
     description:
       "A React component library for shipping marketing sites that load fast and rank well. Opinionated defaults, TypeScript-first.",
+    lastModified: "2025-09-10",
     longDescription:
-      "PandaUI is a sleek and developer-friendly React component library designed to accelerate modern web development. Built with TypeScript and optimized for Next.js and FastAPI applications, it offers a comprehensive set of customizable components that enhance SEO performance and Google rankings.",
+      "PandaUI grew out of rebuilding the same marketing-site components project after project. Every time I started a new product, I'd rewrite a hero section, a pricing table, a feature grid — slightly differently each time, accumulating inconsistencies.\n\nThe library is TypeScript-first and opinionated about SEO from the start: heading hierarchy is enforced by component structure, image components require alt text at the type level, and metadata slots are built into page-level components rather than bolted on later. Next.js SSG is the primary target, so every component is designed for static rendering with zero client-side JS overhead by default.\n\nThe hardest design decision was theming. I tried CSS-in-JS first (too heavy for static sites), then CSS variables with a design token system that compiles to both Tailwind config and raw CSS. That approach lets projects use PandaUI with or without Tailwind. The component API is deliberately minimal — I removed anything I'd never used across five real projects. The outcome: faster builds, better Lighthouse scores out of the box, and a library I actually reach for instead of rewriting.",
     features: [
       "Extensive collection of reusable and accessible React components",
       "Seamless integration with Next.js for server-side rendering and static site generation",
@@ -102,8 +105,9 @@ export const projects = [
     title: "Textberry",
     description:
       "A toolkit for messy text. Summarize, extract keywords, pull out entities. Originally built for marketers; now an API I keep reaching for.",
+    lastModified: "2025-06-05",
     longDescription:
-      "Textberry is a Python and Django-based platform designed for smart text analysis and manipulation. It offers a suite of tools for content transformation, summarization, keyword extraction, and more. Perfect for writers, marketers, and developers working with textual data.",
+      "Textberry started as a one-off tool to help a marketing team process hundreds of blog drafts — they needed summaries, keyword lists, and entity tags without touching each file manually. It turned into a general-purpose NLP API that I still use in other projects.\n\nThe core pipeline uses spaCy for entity recognition and part-of-speech tagging, with a custom summarization layer that combines extractive sentence scoring (TF-IDF weighted) with an optional abstractive pass via a small fine-tuned model. The extractive-first approach keeps latency under 200ms for documents up to 10,000 words, which matters for real-time use cases.\n\nThe platform supports TXT, PDF, and DOCX uploads with a Django backend handling parsing, job queuing, and result caching in Redis. Twilio SMS notifications alert users when long-running batch jobs complete. The RESTful API was designed for third-party integration from day one — clean JSON responses with consistent error codes. The main thing I'd do differently: swap the custom summarizer for a dedicated model endpoint from the start. The custom layer added two weeks of work for marginal quality gains over what a well-prompted API call delivers.",
     features: [
       "Text summarization using NLP techniques",
       "Keyword and entity extraction",
@@ -129,8 +133,9 @@ export const projects = [
     title: "PicShare",
     description:
       "A small Instagram-style image feed I built to learn Firebase real-time and Next.js together. Upload, share, like, repeat.",
+    lastModified: "2025-04-18",
     longDescription:
-      "PicShare is a modern web application for uploading, sharing, and exploring images. Built with Next.js, MongoDB, and Firebase, it delivers a seamless user experience with real-time features, secure authentication, and a sleek interface.",
+      "PicShare was a deliberate learning project: I wanted to understand Firebase real-time subscriptions and Next.js App Router in the same build, rather than learning them separately from tutorials.\n\nThe architecture splits data concerns deliberately: MongoDB stores user profiles, image metadata, and relationship graphs (followers/following) because it's good at flexible document shapes. Firebase handles the real-time feed updates — when a followed user uploads a photo, the subscriber's feed updates without a page refresh. That separation kept the MongoDB schema clean while using Firebase for what it's actually great at.\n\nFirebase Authentication handles login with Google OAuth, which reduced session management to zero lines of custom code. The image upload flow processes files client-side to enforce a 5MB limit and JPEG/PNG validation before hitting the API — catching bad input early reduced server-side error rates significantly.\n\nThe biggest lesson: Firebase real-time listeners need careful cleanup or they accumulate as users navigate between pages, causing memory leaks and duplicate events. I spent more time on listener lifecycle management than on any feature. The outcome was a clean mental model for when to use Firebase vs. when to use a traditional polling approach.",
     features: [
       "Image upload and sharing functionality",
       "Firebase authentication with secure login/signup",
@@ -157,8 +162,9 @@ export const projects = [
     title: "AlleyBot",
     description:
       "A chatbot that remembers context and tries to read the room. An early experiment in giving GPT a little personality.",
+    lastModified: "2025-02-28",
     longDescription:
-      "AlleyBot is an intelligent chatbot powered by OpenAI, designed to be a friendly and engaging companion. Built with Node.js and Next.js, AlleyBot offers real-time conversations, emotional awareness, and a natural chatting experience.",
+      "AlleyBot was my first serious experiment with giving an LLM a persistent personality and context memory — before LangChain's memory abstractions existed in their current form, so I built the context management myself.\n\nThe core challenge was conversation memory within OpenAI's context window limits. I implemented a sliding window approach: the last N turns are sent verbatim, while older turns are compressed into a rolling summary that's prepended to each request. The summary is itself generated by a smaller, cheaper model call — so long conversations stay coherent without ballooning token costs.\n\nEmotional awareness came from a lightweight sentiment classification step run on each user message before it reached GPT. The classifier output influenced the system prompt tone — not through explicit mood labels, but by selecting from a small set of response style templates. The effect was subtle but made conversations feel less robotic.\n\nThe Node.js backend handles session management and API routing, with the Next.js frontend providing a clean real-time chat UI. The main takeaway: context management is the hardest part of building chatbots, and the gap between a demo that works for 5 turns and one that works for 50 is almost entirely about how you handle memory.",
     features: [
       "Conversational AI powered by OpenAI's GPT models",
       "Real-time chat interface with contextual memory",
@@ -183,8 +189,9 @@ export const projects = [
     title: "DevilsPlanet",
     description:
       "A streetwear storefront, end-to-end: catalog, cart, Stripe checkout, admin panel. Where I learned how much an e-commerce admin actually needs.",
+    lastModified: "2024-12-10",
     longDescription:
-      "DevilsPlanet is a sleek and modern e-commerce platform for trendy clothing and streetwear. Built with React and Node.js, the website delivers a fast, intuitive shopping experience with dynamic product listings and secure checkout.",
+      "DevilsPlanet was my first full e-commerce build, and the scope grew faster than expected — which turned out to be the most educational part. What started as a product catalog and cart became a full storefront with inventory management, order tracking, and an admin dashboard over three months.\n\nThe product catalog supports filtering by category, size, and price range using MongoDB's aggregation pipeline. Cart state lives in the database rather than localStorage (after learning that localStorage-only carts break the moment a user switches devices mid-session). Stripe Checkout handles payments with webhook verification for order confirmation — the webhook integration was the most finicky piece, requiring idempotency handling to prevent duplicate orders on retried events.\n\nThe admin dashboard ended up being half the total work. Store owners needed real-time inventory counts, low-stock alerts, order fulfillment status, and basic sales analytics. I built this with a React dashboard consuming a dedicated admin API layer with role-based access.\n\nThe main lesson: e-commerce admin tooling is where the real complexity lives, not the storefront. Every feature a customer uses generates three admin requirements: a way to configure it, a way to view its state, and a way to fix it when something goes wrong. Building both sides simultaneously forced better API design from the start.",
     features: [
       "Dynamic product catalog with filtering and sorting",
       "User authentication and profile management",
@@ -234,7 +241,7 @@ export const about = {
 
 export const footerLinks = [
   { name: "Terms", href: "#" },
-  { name: "Privacy", href: "#" },
+  { name: "Privacy", href: "/privacy" },
   { name: "Security", href: "#" },
   { name: "Status", href: "#" },
   { name: "Docs", href: "#" },

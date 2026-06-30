@@ -98,12 +98,33 @@ const themeScript = `
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: profile.name,
-  url: SITE_URL,
-  image: `${SITE_URL}${profile.avatar}`,
-  jobTitle: "AI Engineer & Full-Stack Developer",
-  sameAs: [profile.github, profile.linkedin, profile.instagram].filter(Boolean),
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: profile.name,
+      url: SITE_URL,
+      image: `${SITE_URL}${profile.avatar}`,
+      jobTitle: "AI Engineer & Full-Stack Developer",
+      sameAs: [profile.github, profile.linkedin, profile.instagram].filter(Boolean),
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Mohit Sharma",
+      description: "AI Engineer building production-grade LLM applications, RAG systems, and full-stack products.",
+      publisher: { "@id": `${SITE_URL}/#person` },
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": `${SITE_URL}/#profilepage`,
+      url: SITE_URL,
+      name: "Mohit Sharma — AI Engineer & Full-Stack Developer",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      mainEntity: { "@id": `${SITE_URL}/#person` },
+    },
+  ],
 };
 
 export default function RootLayout({
