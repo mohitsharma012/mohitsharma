@@ -107,10 +107,13 @@ export default function ProjectsIndexPage() {
         </ul>
 
         {/* Footer */}
-        <footer className="mt-16 md:mt-20 pt-8 border-t border-[#eee] dark:border-[#1a1a1a]">
+        <footer className="mt-16 md:mt-20 pt-8 border-t border-[#eee] dark:border-[#1a1a1a] flex items-center justify-between gap-4">
           <p className="text-[11px] text-[#bbb] dark:text-[#555]">
             &copy; {new Date().getFullYear()} {profile.name}
           </p>
+          <Link href="/privacy" className="text-[11px] text-[#bbb] dark:text-[#555] hover:text-[#1a1a1a] dark:hover:text-white transition-colors">
+            Privacy
+          </Link>
         </footer>
       </div>
     </div>
