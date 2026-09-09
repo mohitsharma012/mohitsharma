@@ -16,13 +16,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use NEW_SCRET
+      - name: Use NEW_SECRET
         env:
-          NEW_SCRET: ${{ secrets.NEW_SCRET }}
+          NEW_SECRET: ${{ secrets.NEW_SECRET }}
         run: |
           echo "PR #${{ github.event.pull_request.number }} merged into ${{ github.event.pull_request.base.ref }}"
-          if [ -z "$NEW_SCRET" ]; then
-            echo "NEW_SCRET is missing. Add it under Settings > Secrets and variables > Actions."
+          if [ -z "$NEW_SECRET" ]; then
+            echo "NEW_SECRET is missing. Add it under Settings > Secrets and variables > Actions."
             exit 1
           fi
-          echo "NEW_SCRET is available (length ${#NEW_SCRET})"
+          echo "NEW_SECRET is available (length ${#NEW_SECRET})"
