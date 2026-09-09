@@ -11,6 +11,7 @@ jobs:
   test-on-merge:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    environment: Production
     steps:
       - name: Checkout
         uses: actions/checkout@v4
