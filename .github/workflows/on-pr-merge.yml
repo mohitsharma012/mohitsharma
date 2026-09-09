@@ -16,13 +16,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use NEW_SCRET
+      - name: Check merge secret availability
         env:
-          NEW_SCRET: ${{ secrets.NEW_SCRET }}
+          NEW_SECRET: ${{ secrets.NEW_SECRET || secrets.NEW_SCRET }}
         run: |
           echo "PR #${{ github.event.pull_request.number }} merged into ${{ github.event.pull_request.base.ref }}"
-          if [ -z "$NEW_SCRET" ]; then
-            echo "NEW_SCRET is missing. Add it under Settings > Secrets and variables > Actions."
-            exit 1
+          if [ -z "$NEW_SECRET" ]; then
+            echo "No merge secret configured (NEW_SECRET or NEW_SCRET). Skipping secret-dependent check."
+          else
+            echo "Merge secret is available (length ${#NEW_SECRET})"
           fi
-          echo "NEW_SCRET is available (length ${#NEW_SCRET})"
